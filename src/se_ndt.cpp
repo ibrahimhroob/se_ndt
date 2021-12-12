@@ -20,6 +20,7 @@
 using namespace std;
 using namespace perception_oru;
 
+#define GL_VISUALIZE
 
 NDTMatch_SE::NDTMatch_SE(initializer_list<float> b,initializer_list<int> c,initializer_list<float> d,int nIn,int max_iter):resolutions(b),resolutions_order(c),size(d),NumInputs(nIn)
 {
@@ -234,11 +235,12 @@ void NDTMatch_SE::slam(pcl::PointCloud<pcl::PointXYZI>::Ptr cloud)
         std::map<int, Eigen::Affine3d,std::less<int>,
             Eigen::aligned_allocator<std::pair<const int, Eigen::Affine3d> > > hist_rotations;
         std::map<int, float> scores;
+        std::vector<int>::iterator begin_tmp = poseIdxSearch.begin();
+        std::vector<int>::iterator end_tmp = poseIdxSearch.end();
         #pragma omp parallel num_threads(N_THREADS)
         {
             #pragma omp for
-            for(std::vector<int>::iterator it=poseIdxSearch.begin();
-                    it!=poseIdxSearch.end();++it)
+            for(std::vector<int>::iterator it=begin_tmp;it<=end_tmp;++it)
             {
                 Eigen::Affine3d T_=Eigen::Affine3d::Identity();
                 hist->bestFitToHistogram(*key_hists[*it],T_,false);
