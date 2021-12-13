@@ -6,7 +6,7 @@ Dependencies: Boost, Eigen, PCL, Ceres solver
 
 Build with:
 ```bash
-git clone --recurse-submodules https://github.com/azaganidis/se_ndt
+git clone --recurse-submodules https://github.com/ibrahimhroob/se_ndt.git
 mkdir se_ndt/build
 cd se_ndt/build
 cmake -DCMAKE_BUILD_TYPE=Release -DWITH_GL=True ..
